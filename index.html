@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>UTS PC</title>
+</head>
+<body>
+<center>
+	<!-- MODUL 1 -->
+	<h1>--UTS PC--</h1>
+	<div class="row">
+		<div class="column">
+			<canvas id='canvas1' style='display:block;margin:10px'></canvas>
+			<canvas id='canvas2' style='display:block;margin:10px'></canvas>
+		</div>
+		<div class="column">
+			<button id='read'>READ IMAGE</button>
+			<button id='ori'>ORIGINAL IMAGE</button><br><br>
+			<br>
+			<button id='halfgrey'>Button 1</button>
+			<button id='but2'>Button 2</button>
+			<button id="'but3">Button 3</button>
+			<button id="'but4">Button 4</button>
+		</div>
+		
+
+</center>
+</body>
+
+<style>
+body{
+	background: rgba(180,180,255,1);
+}
+* {
+  box-sizing: border-box;
+}
+.column {
+  float: left;
+  padding: 10px;
+  width: 33.3%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+<script src='pc.js'></script>
+<script>
+
+// MODUL 1
+var canvas = document.getElementById('canvas1')
+var obj = new pc(canvas)
+obj.image2canvas("photo1.png")
+var canvas2 = document.getElementById('canvas2')
+var obj2 = new pc(canvas2)
+obj2.blank2canvas(200,200)
+var tes = new Array()
+
+document.getElementById('read').addEventListener('click',function(){
+	tes = obj.image2read()
+})
+
+document.getElementById('ori').addEventListener('click',function(){
+	obj.image2original()
+})
+
+
+//--UTS--
+document.getElementById('but2').addEventListener('click',function(){
+                    tesbackup = new Array()
+                    for(var c=0;c<tes.length;c++){
+                        temp = new Array()
+                        for(var d=0;d<4;d++){
+                            temp.push(tes[c][d])
+                        }
+                        tesbackup.push(temp)
+                    }
+                    var wnow = obj.width
+                    var hnow = obj.height
+                    for (var i=0;i<tesbackup.length;i++){
+                        x=obj.i2x(i)
+                        y=obj.i2y(i)
+                        if (x>wnow/2){
+                        posnow = obj.xy2i(wnow-x-1,y)
+                        tes[i][0]=tesbackup[posnow][0]
+                        tes[i][1]=tesbackup[posnow][1]
+                        tes[i][2]=tesbackup[posnow][2]
+                        tes[i][3]=tesbackup[posnow][3]
+                        }
+                        else if (x<wnow/2){
+                        posnow = obj.xy2i(x,hnow-y-1)
+                        tes[i][0]=tesbackup[posnow][0]
+                        tes[i][1]=tesbackup[posnow][1]
+                        tes[i][2]=tesbackup[posnow][2]
+                        tes[i][3]=tesbackup[posnow][3]
+                        }
+                    }
+                    obj.array2canvas(tes)
+                })
+
+document.getElementById('halfgrey').addEventListener('click',function(){
+                    tesbackup = new Array()
+                    for(var c=0;c<tes.length;c++){
+                        temp = new Array()
+                        for(var d=0;d<4;d++){
+                            temp.push(tes[c][d])
+                        }
+                        tesbackup.push(temp)
+                    }
+                    var wnow = obj.width
+                    for (var i=0;i<tesbackup.length;i++){
+                        x=obj.i2x(i)
+                        y=obj.i2y(i)
+						if (x<wnow/2){
+						posnow = obj.xy2i(wnow-x-1,y)
+                        var total = Math.floor((tesbackup[i][0] + tesbackup[i][1] + tesbackup[i][2])/3)
+                        tes[i][0]=total
+                        tes[i][1]=total
+                        tes[i][2]=total
+                        tes[i][3]=tesbackup[posnow][3]
+                        }
+                        else if (x>wnow/2){
+                        posnow = obj.xy2i(wnow-x-1,y)
+                        var total = Math.floor((tesbackup[i][0] + tesbackup[i][1] + tesbackup[i][2])/3)
+						tes[i][0] = (255-tesbackup[i][0])
+						tes[i][1] = (255-tesbackup[i][1])
+						tes[i][2] = (255-tesbackup[i][2])
+						tes[i][3] = tesbackup[i][3]
+                        }
+						
+                    }
+                    obj.array2canvas(tes)
+                })
+
+
+</script>
+</style>
+</head>
+</html>
