@@ -1,5 +1,7 @@
 Nomor 1
+<br>
 a. Grayscale adalah sebuat efek gambar dimana gambar tersebut tidak memiliki warna selain abu-abu
+<br>
 b. Negative adalah sebuah efek pada gambar dimana warna gambar tersebut terbalik dengan warna aslinya
 
 Nomor 2
